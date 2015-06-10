@@ -33,7 +33,6 @@ public class NettyServer implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         init();
-
     }
 
     public void init() {
@@ -44,9 +43,9 @@ public class NettyServer implements InitializingBean {
         try {
             ChannelFuture channelFuture = server.channel(NioServerSocketChannel.class)
                     .childHandler(channelInitializer)
-                    .option(ChannelOption.SO_BACKLOG,100)
+                    .option(ChannelOption.SO_BACKLOG, 100)
                     .handler(new LoggingHandler(LogLevel.INFO))
-                    .childOption(ChannelOption.SO_KEEPALIVE,true)
+                    .childOption(ChannelOption.SO_KEEPALIVE, true)
                     .bind(port).sync();
             channelFuture.addListener(new GenericFutureListener() {
 

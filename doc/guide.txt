@@ -1,0 +1,16 @@
+1 安装protobuf(linux)
+  1.1 下载protobuf-2.6.1.tar.gz
+  1.2 tar zxvf protobuf-2.6.1.tar.gz
+      ./configure
+      make
+      make install
+2 生成代码
+protoc  --java_out=./src/main/java ./doc/sample.proto
+
+3 protobuf(pb)的作用，是做序列化，具体的接口协议，由业务确定
+
+
+3 样例
+  客户端登录服务端，服务端发送登录响应
+  1 启动服务端 Startup
+  2 启动客户端 ChatClient

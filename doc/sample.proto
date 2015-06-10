@@ -1,0 +1,12 @@
+option java_package = "com.silu.proto.chat";
+option java_outer_classname = "ClientServerMsg";
+
+message Req{
+  required string type = 1;
+  optional bytes content =2;
+}
+
+message Rsp{
+  required string type = 1;
+  optional bytes content =2;
+}
