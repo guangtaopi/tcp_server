@@ -8,10 +8,10 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
@@ -39,9 +39,11 @@ public class ChatClient {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline()
                                 .addLast(new LoggingHandler(LogLevel.INFO))
-                                .addLast("frameDecoder", new ProtobufVarint32FrameDecoder())
+//                                .addLast("frameDecoder", new ProtobufVarint32FrameDecoder())
+                                .addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65536,0,4,0,4))
                                 .addLast("pbDecoder", new ProtobufDecoder(ClientServerMsg.Rsp.getDefaultInstance()))
-                                .addLast("frameEncode", new ProtobufVarint32LengthFieldPrepender())
+//                                .addLast("frameEncode", new ProtobufVarint32LengthFieldPrepender())
+                                .addLast("frameEncode", new LengthFieldPrepender(4))
                                 .addLast("protobufEncode", new ProtobufEncoder())
                                 .addLast(new ChatClientHandler());
                     }
